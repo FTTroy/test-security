@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/workstep
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update  # validate, update, create, create-drop-
+jwt.secret: B93FAF24A680131D7683DD6516F56F20FDFDB5B519DCD2E67ED3ED4C92889F04AC0436F5DA591DD4408084E07C31CF44A03B8F2DCEFF3192895B88F972E69BA5
