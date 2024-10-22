@@ -1,7 +1,7 @@
-package com.github.fttroy.testsecurity.service;
+package com.github.fttroy.testsecurity.auth;
 
-import com.github.fttroy.testsecurity.jpa.entity.UserAuth;
-import com.github.fttroy.testsecurity.jpa.repository.UserAuthRepository;
+import com.github.fttroy.testsecurity.auth.UserAuth;
+import com.github.fttroy.testsecurity.auth.UserAuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

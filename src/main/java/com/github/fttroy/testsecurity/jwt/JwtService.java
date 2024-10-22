@@ -1,60 +1,44 @@
 package com.github.fttroy.testsecurity.jwt;
 
+import com.github.fttroy.testsecurity.otp.OtpService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import java.time.Instant;
-import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
 public class JwtService {
-    @Value("${jwt.secret}")
-    private String secretKey;
+    @Autowired
+    private OtpService otpService;
 
-    private static final long VALIDITY = TimeUnit.MINUTES.toMillis(10);
+    @Autowired
+    JwtUtils jwtUtils;
+
+    private static final long JWT_VALIDITY = TimeUnit.MINUTES.toMillis(30);
 
     public String generateToken(UserDetails userDetails) {
-        Map<String, String> claims = new HashMap<>();
-        claims.put("iss", "me");
         return Jwts.builder()
-                .claims(claims) //informazioni aggiuntive da poter inserire nel token
+                .claim("claim1", "claim") //informazioni aggiuntive da poter inserire nel token
                 .subject(userDetails.getUsername()) //specifica dell'user richiedente
                 .issuedAt(Date.from(Instant.now())) //data di creazione del token
-                .expiration(Date.from(Instant.now().plusMillis(VALIDITY))) //data di scadenza del token
-                .signWith(generateSecretKey()) //specifica la chiave segreta con il quale deve essere firmato
+                .expiration(Date.from(Instant.now().plusMillis(JWT_VALIDITY))) //data di scadenza del token
+                .signWith(jwtUtils.generateSecretKey()) //specifica la chiave segreta con il quale deve essere firmato
                 .compact(); //converte in stringa
     }
 
-    private SecretKey generateSecretKey() {
-        byte[] decodedKey = Base64.getDecoder().decode(secretKey);
-        return Keys.hmacShaKeyFor(decodedKey);
-    }
 
     public String extractUsername(String jwt) {
-        Claims claims = getClaims(jwt);
+        Claims claims = jwtUtils.getClaims(jwt);
         return claims.getSubject();
     }
 
-    public Claims getClaims(String jwt) {
-        return Jwts.parser()
-                .verifyWith(generateSecretKey())
-                .build()
-                .parseSignedClaims(jwt)
-                .getPayload();
-    }
-
     public boolean isTokenValid(String jwt) {
-        Claims claims = getClaims(jwt);
+        Claims claims = jwtUtils.getClaims(jwt);
         return claims.getExpiration().after(Date.from(Instant.now()));
     }
-
 }

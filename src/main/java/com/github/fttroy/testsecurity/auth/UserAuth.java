@@ -1,4 +1,4 @@
-package com.github.fttroy.testsecurity.jpa.entity;
+package com.github.fttroy.testsecurity.auth;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,4 +15,5 @@ public class UserAuth {
     private String username;
     private String password;
     private String role;
+    private String email;
 }

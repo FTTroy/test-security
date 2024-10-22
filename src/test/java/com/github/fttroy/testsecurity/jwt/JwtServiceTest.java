@@ -5,6 +5,8 @@ import jakarta.xml.bind.DatatypeConverter;
 import org.junit.jupiter.api.Test;
 
 import javax.crypto.SecretKey;
+import java.time.Instant;
+import java.util.Date;
 
 public class JwtServiceTest {
 
@@ -13,5 +15,7 @@ public class JwtServiceTest {
         SecretKey key = Jwts.SIG.HS512.key().build();
         String encodedKey = DatatypeConverter.printHexBinary(key.getEncoded());
         System.out.println("secret key:"+encodedKey);
+
+
     }
 }

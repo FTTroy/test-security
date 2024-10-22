@@ -1,6 +1,6 @@
 package com.github.fttroy.testsecurity.jwt;
 
-import com.github.fttroy.testsecurity.service.UserAuthDetailsService;
+import com.github.fttroy.testsecurity.auth.UserAuthDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,6 @@ Filtro custom che si attiverà una volta per ogni richiesta HTTP
 public class JwtAuthFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
-
     @Autowired
     private UserAuthDetailsService userAuthDetailsService;
 

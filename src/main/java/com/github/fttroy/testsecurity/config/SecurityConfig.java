@@ -1,7 +1,7 @@
 package com.github.fttroy.testsecurity.config;
 
 import com.github.fttroy.testsecurity.jwt.JwtAuthFilter;
-import com.github.fttroy.testsecurity.service.UserAuthDetailsService;
+import com.github.fttroy.testsecurity.auth.UserAuthDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +39,7 @@ public class SecurityConfig {
         return http.
                 csrf(AbstractHttpConfigurer::disable).
                 authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/home", "/register/**","/authenticate").permitAll();
+                    registry.requestMatchers("/home", "/register/**","/otp/**","/validate","/authenticate").permitAll();
                     registry.requestMatchers("/admin/**").hasRole("ADMIN");
                     registry.requestMatchers("/user/**").hasRole("USER");
                     registry.anyRequest().authenticated();

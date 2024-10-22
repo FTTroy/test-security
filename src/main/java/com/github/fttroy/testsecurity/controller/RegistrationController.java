@@ -1,9 +1,8 @@
 package com.github.fttroy.testsecurity.controller;
 
-import com.github.fttroy.testsecurity.entity.UserAuth;
-import com.github.fttroy.testsecurity.repository.UserAuthRepository;
+import com.github.fttroy.testsecurity.jpa.entity.UserAuth;
+import com.github.fttroy.testsecurity.jpa.service.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,14 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegistrationController {
 
     @Autowired
-    private UserAuthRepository repository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private UserAuthService service;
 
     @PostMapping("register/user")
     public UserAuth createUser(@RequestBody UserAuth userAuth){
-        userAuth.setPassword(passwordEncoder.encode(userAuth.getPassword()));
-        return repository.save(userAuth);
+        return service.save(userAuth);
     }
 }

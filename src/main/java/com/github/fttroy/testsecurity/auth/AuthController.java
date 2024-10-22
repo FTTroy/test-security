@@ -1,9 +1,8 @@
-package com.github.fttroy.testsecurity.controller;
+package com.github.fttroy.testsecurity.auth;
 
-import com.github.fttroy.testsecurity.records.LoginForm;
 import com.github.fttroy.testsecurity.jwt.JwtService;
-import com.github.fttroy.testsecurity.service.OtpService;
-import com.github.fttroy.testsecurity.service.UserAuthDetailsService;
+import com.github.fttroy.testsecurity.jwt.JwtUtils;
+import com.github.fttroy.testsecurity.mail.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +21,10 @@ public class AuthController {
     private JwtService jwtService;
 
     @Autowired
-    private OtpService otpService;
+    private MailService mailService;
+
+    @Autowired
+    private JwtUtils utils;
 
     @Autowired
     private UserAuthDetailsService authDetailsService;
@@ -51,5 +53,4 @@ public class AuthController {
             throw new UsernameNotFoundException("Invalid Credentials");
         }
     }
-
 }
